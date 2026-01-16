@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -25,17 +26,12 @@ public class ChatController {
         return chatService.createPrivateChatByEmail(email, request.userId());
     }
 
-//    @PostMapping("/private")
-//    public ChatResponse createPrivateChat(
-//            Authentication authentication,
-//            @RequestBody CreatePrivateChatRequest request
-//    ) {
-//        String email = authentication.getName(); // ✅ email from JWT
-//        return chatService.createPrivateChatByEmail(email, request.userId());
-//    }
-
-
-
+    @GetMapping()
+    public List<ChatResponse> getMyChats(Authentication authentication)
+    {
+        String email = authentication.getName();
+        return chatService.getMyChats(email);
+    }
     // 👥 GROUP CHAT
     @PostMapping("/group")
     public ChatResponse createGroupChat(

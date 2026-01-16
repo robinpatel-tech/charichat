@@ -68,6 +68,23 @@ public class ChatService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public List<ChatResponse> getMyChats(String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return chatRepository.findAllChatsForUser(user.getId())
+                .stream()
+                .map(chat -> new ChatResponse(
+                        chat.getId(),
+                        chat.getChatType(),
+                        chat.getCreatedAt()
+                ))
+                .toList();
+    }
+
+
 
 
 
