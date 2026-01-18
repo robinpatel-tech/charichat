@@ -16,6 +16,8 @@ public interface ChatParticipantRepository
     List<ChatParticipant> findByChat(Chat chat);
 
     Optional<ChatParticipant> findByChatAndUser(Chat chat, User user);
+
+    boolean existsByChatIdAndUserId(UUID chatId, UUID userId);
 }
 
 
