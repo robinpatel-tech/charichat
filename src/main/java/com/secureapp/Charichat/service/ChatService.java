@@ -17,6 +17,7 @@ public class ChatService {
     private final ChatRepository chatRepository;
     private final ChatParticipantRepository chatParticipantRepository;
     private final UserRepository userRepository;
+    private final MessageRepository messageRepository;
 
     @Transactional
     public ChatResponse createPrivateChat(UUID currentUserId, UUID otherUserId) {
@@ -84,6 +85,34 @@ public class ChatService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public List<MessageResponse> getChatMessages(UUID chatId, String email) {
+
+        // 1️⃣ Find current user
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // 2️⃣ Check membership
+        boolean isParticipant =
+                chatParticipantRepository.existsByChatIdAndUserId(chatId, user.getId());
+
+        if (!isParticipant) {
+            throw new RuntimeException("Access denied to this chat");
+        }
+
+        // 3️⃣ Fetch messages
+        return messageRepository
+                .findByChatIdOrderByCreatedAtAsc(chatId)
+                .stream()
+                .map(msg -> new MessageResponse(
+                        msg.getId(),
+                        msg.getSender().getId(),
+                        msg.getSender().getDisplayName(),
+                        msg.getCipherText(),
+                        msg.getCreatedAt()
+                ))
+                .toList();
+    }
 
 
 

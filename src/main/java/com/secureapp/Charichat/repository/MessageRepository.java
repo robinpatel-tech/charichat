@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface MessageRepository extends JpaRepository<Message, UUID>{
     List<Message> findByChatOrderByCreatedAtAsc(Chat chat);
+    List<Message> findByChatIdOrderByCreatedAtAsc(UUID chatId);
 }
 
 //✔ Correct ordering

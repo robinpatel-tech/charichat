@@ -41,4 +41,14 @@ public class ChatController {
         UUID creatorId = UUID.fromString(authentication.getName());
         return chatService.createGroupChat(creatorId, request.userIds());
     }
+
+    @GetMapping("/{chatId}/messages")
+    public List<MessageResponse> getChatMessages(
+            @PathVariable UUID chatId,
+            Authentication authentication
+    ) {
+        String email = authentication.getName();
+        return chatService.getChatMessages(chatId, email);
+    }
+
 }
