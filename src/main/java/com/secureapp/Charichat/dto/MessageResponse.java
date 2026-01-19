@@ -8,7 +8,8 @@ import java.util.UUID;
 public record MessageResponse(
         UUID id,
         UUID senderId,
+        UUID chatId,
         String senderName,
-        String getCipherText,
+        String CipherText,
         LocalDateTime createdAt
 ) {}
