@@ -107,6 +107,7 @@ public class ChatService {
                 .map(msg -> new MessageResponse(
                         msg.getId(),
                         msg.getSender().getId(),
+                        msg.getChat().getId(),
                         msg.getSender().getDisplayName(),
                         msg.getCipherText(),
                         msg.getCreatedAt()
