@@ -8,7 +8,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.UUID;
 
-@Component // ✅ THIS IS THE FIX
+@Component
 public class JwtUtil {
 
     private static final String SECRET = "your-very-secure-256-bit-secret-key-change-this";

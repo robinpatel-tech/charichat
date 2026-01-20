@@ -22,7 +22,7 @@ public class ChatService {
     @Transactional
     public ChatResponse createPrivateChat(UUID currentUserId, UUID otherUserId) {
 
-        // 1️⃣ Check if chat already exists
+        // 1️check if chat already exists
         return chatRepository
                 .findPrivateChatBetweenUsers(currentUserId, otherUserId)
                 .map(chat -> new ChatResponse(
@@ -88,11 +88,11 @@ public class ChatService {
     @Transactional(readOnly = true)
     public List<MessageResponse> getChatMessages(UUID chatId, String email) {
 
-        // 1️⃣ Find current user
+        // find current user
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // 2️⃣ Check membership
+        // check membership
         boolean isParticipant =
                 chatParticipantRepository.existsByChatIdAndUserId(chatId, user.getId());
 
@@ -100,7 +100,7 @@ public class ChatService {
             throw new RuntimeException("Access denied to this chat");
         }
 
-        // 3️⃣ Fetch messages
+        // fetch messages
         return messageRepository
                 .findByChatIdOrderByCreatedAtAsc(chatId)
                 .stream()
@@ -119,7 +119,7 @@ public class ChatService {
 
 
 
-    // 🔹 GROUP CHAT
+    //GROUP CHAT
     @Transactional
     public ChatResponse createPrivateChatByEmail(String email, UUID otherUserId) {
 

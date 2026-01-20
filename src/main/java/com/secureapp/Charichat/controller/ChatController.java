@@ -16,7 +16,7 @@ public class ChatController {
 
     private final ChatService chatService;
 
-    // 🔐 PRIVATE CHAT
+    //PRIVATE CHAT
     @PostMapping("/private")
     public ChatResponse createPrivateChat(
             Authentication authentication,
@@ -32,7 +32,7 @@ public class ChatController {
         String email = authentication.getName();
         return chatService.getMyChats(email);
     }
-    // 👥 GROUP CHAT
+    //GROUP CHAT
     @PostMapping("/group")
     public ChatResponse createGroupChat(
             Authentication authentication,

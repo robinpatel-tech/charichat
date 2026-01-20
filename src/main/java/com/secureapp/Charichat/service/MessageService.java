@@ -31,15 +31,15 @@ public class MessageService {
     ) {
 
 
-        // 1️⃣ Sender
+        //Sender
         User sender = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // 2️⃣ Chat
+        //Chat
         Chat chat = chatRepository.findById(request.chatId())
                 .orElseThrow(() -> new RuntimeException("Chat not found"));
 
-        // 3️⃣ Membership check
+        //Membership check
         boolean allowed =
                 chatParticipantRepository.existsByChatIdAndUserId(
                         chat.getId(),
@@ -50,7 +50,7 @@ public class MessageService {
             throw new RuntimeException("Access denied to this chat");
         }
 
-        // 4️⃣ Save message
+        //Save message
         Message message = Message.builder()
                 .chat(chat)
                 .sender(sender)
