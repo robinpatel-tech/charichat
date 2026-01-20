@@ -11,7 +11,3 @@ import java.util.UUID;
 public interface GroupKeyRepository extends JpaRepository<GroupKey, UUID>{
     Optional<GroupKey> findByChatAndUser(Chat chat, User user);
 }
-
-
-//Secure group key lookup
-//✔ Prevents duplicate keys

@@ -19,12 +19,3 @@ public interface ChatParticipantRepository
 
     boolean existsByChatIdAndUserId(UUID chatId, UUID userId);
 }
-
-
-//Used for:
-//
-//Group membership
-//
-//Permissions
-//
-//Admin checks

@@ -12,4 +12,3 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
 }
 
 
-//Clean unread notification handling

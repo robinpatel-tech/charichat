@@ -18,7 +18,7 @@ public class SwaggerConfig {
                         .title("CHARICHAT")
                         .description("Sample swagger setup")
                 )
-                // 🔐 Apply JWT globally
+                //Apply JWT globally
                 .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("BearerAuth",
