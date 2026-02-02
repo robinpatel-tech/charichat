@@ -15,10 +15,11 @@ import java.util.UUID;
 @Builder
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "uuid")
-    private UUID id;
+@Id
+@GeneratedValue(strategy = GenerationType.UUID)
+// MySQL compatibility fix: Changed from "uuid" to "BINARY(16)"
+@Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
+private UUID id;
 
     @Column(nullable = false , unique = true)
     private String email;
@@ -29,8 +30,8 @@ public class User {
     @Column(name = "display_name")
     private String displayName;
 
-    @Column(name = "public_key",columnDefinition = "TEXT", nullable = false)
-    private String publicKey;
+@Column(name = "public_key", columnDefinition = "TEXT", nullable = false)
+private String publicKey;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

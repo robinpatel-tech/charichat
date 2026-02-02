@@ -16,10 +16,10 @@ import java.util.UUID;
 @Builder
 public class Notification {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "uuid")
-    private UUID id;
+@Id
+@GeneratedValue(strategy = GenerationType.UUID)
+@Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
+private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

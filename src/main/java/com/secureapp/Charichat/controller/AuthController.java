@@ -1,7 +1,4 @@
 package com.secureapp.Charichat.controller;
-
-import com.secureapp.Charichat.dto.LoginRequest;
-import com.secureapp.Charichat.dto.RegisterRequest;
 import com.secureapp.Charichat.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

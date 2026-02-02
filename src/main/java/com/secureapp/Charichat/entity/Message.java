@@ -15,10 +15,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class Message {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "uuid")
-    private UUID id;
+
+@Id
+@GeneratedValue(strategy = GenerationType.UUID)
+@Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
+private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id",nullable = false)

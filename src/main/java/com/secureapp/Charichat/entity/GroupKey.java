@@ -15,7 +15,8 @@ import java.util.UUID;
 public class GroupKey {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "uuid")
+    // MySQL compatibility fix: Changed "uuid" to "BINARY(16)"
+    @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)

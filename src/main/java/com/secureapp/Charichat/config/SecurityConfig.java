@@ -36,7 +36,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/**").hasRole("USER")
-                        .requestMatchers("/api/chats/**").hasRole("USER") // 👈 ADD THIS
+                        .requestMatchers("/api/chats/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
 
