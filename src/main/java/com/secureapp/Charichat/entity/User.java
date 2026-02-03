@@ -17,7 +17,6 @@ public class User {
 
 @Id
 @GeneratedValue(strategy = GenerationType.UUID)
-// MySQL compatibility fix: Changed from "uuid" to "BINARY(16)"
 @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
 private UUID id;
 
