@@ -30,6 +30,5 @@ public class Chat {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    // this is comment for learning
 
 }
