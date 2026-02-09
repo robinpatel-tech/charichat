@@ -20,9 +20,13 @@ public class MessageController {
     @PostMapping
     public MessageResponse sendMessage(
             Authentication authentication,
-            @RequestBody MessageRequest request
-    ) {
-        String email = authentication.getName();
-        return messageService.sendMessage(email, request);
+            @RequestBody MessageRequest request)
+    {
+        return messageService.sendMessage(
+                authentication.getName(),
+                request.chatId(),
+                request.cipherText()
+        );
     }
+
 }
