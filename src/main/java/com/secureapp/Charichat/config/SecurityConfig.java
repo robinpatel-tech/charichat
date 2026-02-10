@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/**").hasRole("USER")
                         .requestMatchers("/api/chats/**").hasRole("USER")
+                        .requestMatchers("/api/messages/**").hasRole("USER")
                         .anyRequest().authenticated()
                 )
 

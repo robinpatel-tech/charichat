@@ -14,6 +14,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class MessageService {
@@ -24,52 +26,43 @@ public class MessageService {
     private final UserRepository userRepository;
 
 
-    @Transactional
-    public MessageResponse sendMessage(
-            String email,
-            MessageRequest request
-    ) {
+@Transactional
+public MessageResponse sendMessage(
+        String senderEmail,
+        UUID chatId,
+        String cipherText
+) {
+    User sender = userRepository.findByEmail(senderEmail)
+            .orElseThrow(() -> new RuntimeException("User not found"));
 
+    //Authorization check
+    boolean isParticipant =
+            chatParticipantRepository.existsByChatIdAndUserId(chatId, sender.getId());
 
-        //Sender
-        User sender = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        //Chat
-        Chat chat = chatRepository.findById(request.chatId())
-                .orElseThrow(() -> new RuntimeException("Chat not found"));
-
-        //Membership check
-        boolean allowed =
-                chatParticipantRepository.existsByChatIdAndUserId(
-                        chat.getId(),
-                        sender.getId()
-                );
-
-        if (!allowed) {
-            throw new RuntimeException("Access denied to this chat");
-        }
-
-        //Save message
-        Message message = Message.builder()
-                .chat(chat)
-                .sender(sender)
-                .cipherText(request.cipherText())
-                .status(MessageStatus.SENT)
-                .build();
-
-
-        Message savedMessage = messageRepository.saveAndFlush(message);
-
-        return new MessageResponse(
-                savedMessage.getId(),
-                savedMessage.getSender().getId(),
-                savedMessage.getChat().getId(),
-                savedMessage.getSender().getDisplayName(),
-                savedMessage.getCipherText(),
-                savedMessage.getCreatedAt()
-        );
-
-
+    if (!isParticipant) {
+        throw new RuntimeException("Access denied to this chat");
     }
+
+    Chat chat = chatRepository.findById(chatId)
+            .orElseThrow(() -> new RuntimeException("Chat not found"));
+
+    Message message = Message.builder()
+            .chat(chat)
+            .sender(sender)
+            .cipherText(cipherText)
+            .status(MessageStatus.SENT)
+            .build();
+
+    Message saved = messageRepository.saveAndFlush(message);
+
+    return new MessageResponse(
+            saved.getId(),
+            sender.getId(),
+            chat.getId(),
+            sender.getDisplayName(),
+            saved.getCipherText(),
+            saved.getCreatedAt()
+    );
+}
+
 }
